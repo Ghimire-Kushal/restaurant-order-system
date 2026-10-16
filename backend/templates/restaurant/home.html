@@ -1,0 +1,16 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Table Service</title>
+  <link rel="stylesheet" href="{% static 'restaurant/app.css' %}?v=3">
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="/"><span class="brand-mark">TS</span><span>Table Service</span></a><span class="context">Restaurant operations</span></header>
+  <main class="shell"><section class="hero"><div><p class="muted">Restaurant operations</p><h1>Table Service</h1><p class="muted">Open a QR table link for customers, or choose a staff workspace.</p></div></section>
+    <div class="grid"><a class="panel" href="/staff/reception/"><h2>Reception workspace</h2><p class="muted">Review incoming orders, payments, receipts, and tables.</p></a><a class="panel" href="/staff/kitchen/"><h2>Kitchen workspace</h2><p class="muted">Prepare accepted orders and mark them ready.</p></a></div>
+  </main>
+</body>
+</html>
