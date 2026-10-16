@@ -49,6 +49,31 @@ class OrderingWorkflowTests(TestCase):
         )
         self.assertEqual(duplicate.status_code, 400)
 
+    def test_customer_can_update_cart_quantity_with_bounds(self):
+        token = self.session.session_token
+        response = self.client.post(
+            f"/api/cart/{token}/add/",
+            {"food_item_id": self.food.id},
+            format="json",
+        )
+        item_id = response.data["cart"]["items"][0]["id"]
+
+        response = self.client.patch(
+            f"/api/cart/{token}/item/{item_id}/",
+            {"quantity": 3},
+            format="json",
+        )
+        self.assertEqual(response.status_code, 200, response.data)
+        self.assertEqual(response.data["cart"]["items"][0]["quantity"], 3)
+
+        for invalid_quantity in (0, 51, "not-a-number"):
+            response = self.client.patch(
+                f"/api/cart/{token}/item/{item_id}/",
+                {"quantity": invalid_quantity},
+                format="json",
+            )
+            self.assertEqual(response.status_code, 400)
+
     def test_invalid_and_inactive_table_qr_codes_are_rejected(self):
         self.assertEqual(self.client.get("/table/scan/not-a-uuid/").status_code, 404)
 
